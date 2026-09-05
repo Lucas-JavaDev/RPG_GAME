@@ -32,7 +32,7 @@ public class CharacterController {
 
     @PostMapping
     public ResponseEntity<CharacterDTO> create(@RequestBody CharacterDTO characterDTO) {
-        characterDTO = characterService.create(characterDTO.getName(), characterDTO.getCharacterClass().toString());
+        characterDTO = characterService.create(characterDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(characterDTO)
                 .toUri();

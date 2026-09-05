@@ -44,12 +44,12 @@ public class CharacterService {
     }
 
     @Transactional
-    public CharacterDTO create(String name, String characterClass) {
+    public CharacterDTO create(CharacterDTO characterDTO) {
         RpgCharacter character = new RpgCharacter();
 
-        CharacterClass characterType = CharacterClass.valueOf(characterClass.toUpperCase());
+        CharacterClass characterType = CharacterClass.valueOf(characterDTO.getCharacterClass().name().toUpperCase());
 
-        character.setName(name);
+        character.setName(characterDTO.getName());
         character.setLevel(1);
         character.setCharacterClass(characterType);
         character.setHp(characterType.getDefaultHp());

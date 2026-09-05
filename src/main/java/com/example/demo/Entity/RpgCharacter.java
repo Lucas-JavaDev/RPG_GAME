@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 
+import com.example.demo.DTO.CharacterDTO;
 import com.example.demo.Entity.Enum.CharacterClass;
 import com.example.demo.Entity.Enum.WeaponType;
 import jakarta.persistence.*;
@@ -40,4 +41,31 @@ public class RpgCharacter {
 
     @Enumerated(EnumType.STRING)
     private WeaponType weaponType;
+
+
+    public void update(RpgCharacter character, CharacterDTO dto) {
+        if(dto.getName() != null) {
+            character.setName(dto.getName());
+        }
+
+        if(dto.getCharacterClass() != null) {
+            character.setCharacterClass(dto.getCharacterClass());
+            character.setWeaponType(dto.getCharacterClass().getWeaponType());
+            character.setHp(dto.getCharacterClass().getDefaultHp());
+            character.setAttack(dto.getCharacterClass().getDefaultAttack());
+            character.setDefense(dto.getCharacterClass().getDefaultDefense());
+        }
+        if(dto.getHp() != null) {
+            character.setHp(dto.getHp());
+        }
+        if(dto.getDefense() != null) {
+            character.setDefense(dto.getDefense());
+        }
+        if(dto.getAttack() != null) {
+            character.setAttack(dto.getAttack());
+        }
+        if(dto.getLevel() != null) {
+            character.setLevel(dto.getLevel());
+        }
+    }
 }

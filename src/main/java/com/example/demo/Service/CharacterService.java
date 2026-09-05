@@ -71,31 +71,7 @@ public class CharacterService {
         if(!characterRepository.existsById(id)) {
             throw new ResourceNotFoundException("Character not found");
         }
-
-        if(dto.getName() != null) {
-            character.setName(dto.getName());
-        }
-
-        if(dto.getCharacterClass() != null) {
-            character.setCharacterClass(dto.getCharacterClass());
-            character.setWeaponType(dto.getCharacterClass().getWeaponType());
-            character.setHp(dto.getCharacterClass().getDefaultHp());
-            character.setAttack(dto.getCharacterClass().getDefaultAttack());
-            character.setDefense(dto.getCharacterClass().getDefaultDefense());
-        }
-        if(dto.getHp() != null) {
-            character.setHp(dto.getHp());
-        }
-        if(dto.getDefense() != null) {
-            character.setDefense(dto.getDefense());
-        }
-        if(dto.getAttack() != null) {
-            character.setAttack(dto.getAttack());
-        }
-        if(dto.getLevel() != null) {
-            character.setLevel(dto.getLevel());
-        }
-
+        character.update(character, dto);
 
         characterRepository.save(character);
 

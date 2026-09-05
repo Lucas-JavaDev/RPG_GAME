@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 
+import com.example.demo.DTO.MonsterDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +31,19 @@ public class Monster {
     @OneToMany(mappedBy = "monster")
     private List<Battle> battles = new ArrayList<>();
 
+
+    public void update(Monster monster, MonsterDTO monsterDTO) {
+        if(monsterDTO.getName() != null) {
+            monster.setName(monsterDTO.getName());
+        }
+        if(monsterDTO.getHp() != null) {
+            monster.setHp(monsterDTO.getHp());
+        }
+        if(monsterDTO.getDamage() != null) {
+            monster.setDamage(monsterDTO.getDamage());
+        }
+        if(monsterDTO.getDefense() != null) {
+            monster.setDefense(monsterDTO.getDefense());
+        }
+    }
 }

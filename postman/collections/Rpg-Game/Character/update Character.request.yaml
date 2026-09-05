@@ -1,0 +1,13 @@
+$kind: http-request
+name: update Character
+url: http://localhost:8080/characters/1
+method: PUT
+body:
+  type: json
+  content: |-
+    {
+        "name": "Trunk",
+        "characterClass": "MAGE"
+        
+    }
+order: 3860954132543142

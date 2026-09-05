@@ -1,0 +1,5 @@
+$kind: http-request
+name: all Characters
+url: http://localhost:8080/characters
+method: GET
+order: 4436554971097256

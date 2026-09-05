@@ -1,0 +1,14 @@
+$kind: http-request
+name: new Monster
+url: http://localhost:8080/monsters
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "name": "ThreeNails",
+        "hp": 200,
+        "damage": 100,
+        "defense": 150
+    }
+order: 4230701049984696

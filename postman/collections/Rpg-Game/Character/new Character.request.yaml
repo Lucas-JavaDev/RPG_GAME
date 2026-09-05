@@ -1,5 +1,5 @@
 $kind: http-request
-name: New Request
+name: new Character
 url: http://localhost:8080/characters
 method: POST
 body:
@@ -7,6 +7,6 @@ body:
   content: |-
     {
         "name": "Abygail",
-        "characterClass": "archer"
+        "characterClass": "ARCHER"
     }
-order: 3602663972168687
+order: 3917488419370442

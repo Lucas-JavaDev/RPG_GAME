@@ -1,0 +1,5 @@
+$kind: http-request
+name: byId
+url: http://localhost:8080/characters/1
+method: GET
+order: 1788635534435

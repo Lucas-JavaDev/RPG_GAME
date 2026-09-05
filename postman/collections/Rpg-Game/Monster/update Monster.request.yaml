@@ -1,0 +1,8 @@
+$kind: http-request
+name: update Monster
+url: http://localhost:8080/monsters/1
+method: PUT
+body:
+  type: json
+  content: ""
+order: 4348500177888491

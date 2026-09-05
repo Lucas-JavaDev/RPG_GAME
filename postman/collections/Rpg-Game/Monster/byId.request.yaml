@@ -1,0 +1,5 @@
+$kind: http-request
+name: byId
+url: http://localhost:8080/monsters/1
+method: GET
+order: 4192323960403020

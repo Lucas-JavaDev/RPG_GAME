@@ -1,0 +1,12 @@
+$kind: http-request
+name: New Request
+url: http://localhost:8080/characters
+method: POST
+body:
+  type: json
+  content: |-
+    {
+        "name": "Abygail",
+        "characterClass": "archer"
+    }
+order: 3602663972168687

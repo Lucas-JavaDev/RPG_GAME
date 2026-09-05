@@ -17,6 +17,7 @@ public class CharacterDTO {
     private Long id;
     private String name;
     private Integer level;
+    private Integer xp;
     private Integer hp;
     private Integer defense;
     private Integer attack;
@@ -27,6 +28,7 @@ public class CharacterDTO {
         id = rpgCharacter.getId();
         name  = rpgCharacter.getName();
         level = rpgCharacter.getLevel();
+        xp = rpgCharacter.getXp();
         hp = rpgCharacter.getHp();
         defense = rpgCharacter.getDefense();
         attack = rpgCharacter.getAttack();

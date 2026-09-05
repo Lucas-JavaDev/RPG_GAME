@@ -44,4 +44,6 @@ public class CharacterController {
     public ResponseEntity<CharacterDTO> update(@RequestBody CharacterDTO characterDTO, @PathVariable Long id) {
         return ResponseEntity.ok(characterService.update(characterDTO, id));
     }
+
+
 }

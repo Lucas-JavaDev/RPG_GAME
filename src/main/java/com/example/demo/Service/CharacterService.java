@@ -118,9 +118,9 @@ public class CharacterService {
         return 50 * level + 35 * (level - 1);
     }
 
+    @Transactional
     public void gainXp(RpgCharacter character, Integer xpGained) {
         character.setXp(character.getXp() + xpGained);
-
 
 
         while(character.getXp() >= calculateXpNeeded(character.getLevel())) {
@@ -137,6 +137,8 @@ public class CharacterService {
         );
     }
 
+
+    @Transactional
     public void levelUp(RpgCharacter character) {
 
         character.setLevel(character.getLevel() + 1);

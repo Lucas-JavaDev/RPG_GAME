@@ -26,7 +26,6 @@ public class Battle {
     @JoinColumn(name = "monster_id")
     private Monster monster;
 
-    private Integer damage;
 
     @Enumerated(EnumType.STRING)
     private BattleResult result;

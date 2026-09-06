@@ -1,13 +1,10 @@
 $kind: http-request
 name: update Character
-url: http://localhost:8080/characters/1
+url: http://localhost:8080/characters/1/gain-xp?xp=34
 method: PUT
+queryParams:
+  xp: "34"
 body:
   type: json
-  content: |-
-    {
-        "name": "Trunk",
-        "characterClass": "MAGE"
-        
-    }
+  content: ""
 order: 3860954132543142

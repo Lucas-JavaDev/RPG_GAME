@@ -1,6 +1,7 @@
 package com.example.demo.Entity;
 
 import com.example.demo.Entity.Enum.BattleResult;
+import com.example.demo.Entity.Enum.BattleTurn;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,17 @@ public class Battle {
     @JoinColumn(name = "monster_id")
     private Monster monster;
 
+    private Integer characterHp;
+    private Integer monsterHp;
+
+    private Integer characterDamage;
+    private Integer monsterDamage;
+
+    private Integer characterDefense;
+    private Integer monsterDefense;
+
+    @Enumerated(EnumType.STRING)
+    private BattleTurn turn;
 
     @Enumerated(EnumType.STRING)
     private BattleResult result;

@@ -2,5 +2,6 @@ package com.example.demo.Entity.Enum;
 
 public enum BattleResult {
     WIN,
-    LOSE
+    LOSE,
+    IN_PROGRESS
 }

@@ -1,4 +1,4 @@
 $kind: http-request
-url: ""
-method: GET
+url: http://localhost:8080/battles/attack/1
+method: PUT
 order: 3146999396146187

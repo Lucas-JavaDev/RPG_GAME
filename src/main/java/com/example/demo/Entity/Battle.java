@@ -1,6 +1,6 @@
 package com.example.demo.Entity;
 
-import com.example.demo.Entity.Enum.BattleResult;
+import com.example.demo.Entity.Enum.BattleStatus;
 import com.example.demo.Entity.Enum.BattleTurn;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,6 +40,6 @@ public class Battle {
     private BattleTurn turn;
 
     @Enumerated(EnumType.STRING)
-    private BattleResult result;
+    private BattleStatus status;
 
 }

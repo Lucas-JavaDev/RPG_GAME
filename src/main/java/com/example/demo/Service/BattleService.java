@@ -2,6 +2,7 @@ package com.example.demo.Service;
 
 import com.example.demo.DTO.BattleDTO;
 import com.example.demo.DTO.BattleStartDTO;
+import com.example.demo.DTO.BattleStatusDTO;
 import com.example.demo.Entity.Battle;
 import com.example.demo.Entity.Enum.BattleStatus;
 import com.example.demo.Entity.Enum.BattleTurn;
@@ -36,10 +37,10 @@ public class BattleService {
     }
 
 
-    public List<BattleDTO> findAllActivesBattles() {
-        List<Battle> battles = battleRepository.findAllBattles(BattleStatus.IN_PROGRESS);
+    public List<BattleStatusDTO> findAllBattlesByStatus(BattleStatus status) {
+        List<Battle> battles = battleRepository.findAllBattles(status);
 
-        return battles.stream().map(battle -> new BattleDTO(battle.getStatus(), battle.getId())).toList();
+        return battles.stream().map(battle -> new BattleStatusDTO(battle.getId(), battle.getStatus())).toList();
     }
 
 
@@ -78,21 +79,29 @@ public class BattleService {
             throw new ResourceNotFoundException("Battle Not Found");
         }
 
+
         if(!battle.getTurn().equals(BattleTurn.CHARACTER)) {
             throw new InvalidTurnException("The current turn is Monster");
         }
 
         Integer damage = Math.max(battle.getRpgCharacter().getAttack() - battle.getMonsterDefense(), 0);
+        battle.setCharacterDamage(damage);
         if(damage == 0) {
-            battle.setMonsterDefense(battle.getMonsterDefense() - battle.getRpgCharacter().getAttack());
+            if(damage == battle.getMonsterDefense()) {
+                battle.setMonsterDefense(0);
+            } else {
+                battle.setMonsterDefense(battle.getMonsterDefense() - battle.getRpgCharacter().getAttack());
+            }
         } else {
             battle.setMonsterDefense(0);
             battle.setMonsterHp(battle.getMonsterHp() - damage);
         }
         battle.setTurn(BattleTurn.MONSTER);
 
-        if(battle.getMonsterHp() == 0) {
+        if(battle.getMonsterHp() <= 0) {
+            battle.setMonsterHp(0);
             battle.setStatus(BattleStatus.WINNER);
+            battle.setTurn(BattleTurn.NONE);
             battleRepository.save(battle);
             return new BattleDTO(battle);
         }
@@ -101,6 +110,8 @@ public class BattleService {
         return new BattleDTO(battle);
     }
 
+
+    @Transactional
     public BattleDTO monsterAttack(Long id) {
         if(!characterRepository.existsById(id)) {
             throw new ResourceNotFoundException("Character Not Found");
@@ -116,16 +127,24 @@ public class BattleService {
         }
 
         Integer damage = Math.max(battle.getMonster().getDamage() - battle.getCharacterDefense(), 0);
+        battle.setMonsterDamage(damage);
         if(damage == 0) {
-            battle.setCharacterDefense(battle.getCharacterDefense() - damage);
+            if(damage == battle.getCharacterDefense()) {
+                battle.setCharacterDefense(0);
+            } else {
+                battle.setCharacterDefense(battle.getCharacterDefense() - battle.getMonster().getDamage());
+            }
+
         } else {
             battle.setCharacterDefense(0);
             battle.setCharacterHp(battle.getCharacterHp() - damage);
         }
 
         battle.setTurn(BattleTurn.CHARACTER);
-        if(battle.getCharacterHp() == 0) {
+        if(battle.getCharacterHp() <= 0) {
+            battle.setCharacterHp(0);
             battle.setStatus(BattleStatus.DEFEAT);
+            battle.setTurn(BattleTurn.NONE);
             battleRepository.save(battle);
             return new BattleDTO(battle);
         }

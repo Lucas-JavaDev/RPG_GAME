@@ -1,0 +1,6 @@
+$kind: http-request
+url: http://localhost:8080/battles?status=IN_PROGRESS
+method: GET
+queryParams:
+  status: IN_PROGRESS
+order: 3988225950546595

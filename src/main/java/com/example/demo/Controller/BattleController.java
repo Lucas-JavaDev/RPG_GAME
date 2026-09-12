@@ -2,6 +2,8 @@ package com.example.demo.Controller;
 
 import com.example.demo.DTO.BattleDTO;
 import com.example.demo.DTO.BattleStartDTO;
+import com.example.demo.DTO.BattleStatusDTO;
+import com.example.demo.Entity.Enum.BattleStatus;
 import com.example.demo.Service.BattleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +22,8 @@ public class BattleController {
 
 
     @GetMapping
-    public ResponseEntity<List<BattleDTO>> findAllActivesBattles() {
-        List<BattleDTO> battleDTO = battleService.findAllActivesBattles();
+    public ResponseEntity<List<BattleStatusDTO>> findAllActivesBattles(@RequestParam String status) {
+        List<BattleStatusDTO> battleDTO = battleService.findAllBattlesByStatus(BattleStatus.valueOf(status));
         return ResponseEntity.ok(battleDTO);
     }
 

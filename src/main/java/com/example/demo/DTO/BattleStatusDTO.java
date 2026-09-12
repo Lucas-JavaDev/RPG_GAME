@@ -3,7 +3,6 @@ package com.example.demo.DTO;
 
 import com.example.demo.Entity.Battle;
 import com.example.demo.Entity.Enum.BattleStatus;
-import com.example.demo.Entity.Enum.BattleTurn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,23 +10,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BattleDTO {
+public class BattleStatusDTO {
 
     private Long battleId;
-
-    private CharacterBattleDTO character;
-    private MonsterBattleDTO monster;
-
-    private BattleTurn turn;
     private BattleStatus status;
 
-    public BattleDTO(Battle battle) {
+    public BattleStatusDTO(Battle battle) {
         battleId = battle.getId();
-        character = new CharacterBattleDTO(battle);
-        monster = new MonsterBattleDTO(battle);
-        turn = battle.getTurn();
         status = battle.getStatus();
     }
-
-
 }

@@ -6,6 +6,9 @@ import com.example.demo.Exception.InvalidTurnException;
 import com.example.demo.Exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,6 +26,26 @@ public class GlobalExceptionHandler {
     public ResponseEntity<CustomError> resourceNotFoundHandler(InvalidTurnException e) {
         HttpStatus status = HttpStatus.CONFLICT;
         CustomError customError = new CustomError(status, e.getMessage());
+        return ResponseEntity.status(status).body(customError);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<CustomError> methodArgumentNotValidHandler(MethodArgumentNotValidException e) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_CONTENT;
+        CustomError customError = new CustomError(status, "Invalid Data");
+
+        for(FieldError field : e.getBindingResult().getFieldErrors()) {
+            customError.addError(field.getField(), field.getDefaultMessage());
+        }
+
+        return ResponseEntity.status(status).body(customError);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<CustomError> httpNotReableHandler(HttpMessageNotReadableException e) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_CONTENT;
+        CustomError customError = new CustomError(status, "Could not convert String to Enum");
+
         return ResponseEntity.status(status).body(customError);
     }
 

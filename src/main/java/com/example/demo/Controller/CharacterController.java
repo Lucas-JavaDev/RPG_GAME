@@ -4,6 +4,7 @@ package com.example.demo.Controller;
 import com.example.demo.DTO.CharacterDTO;
 import com.example.demo.DTO.CharacterHistoricDTO;
 import com.example.demo.Service.CharacterService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class CharacterController {
     }
 
     @PostMapping
-    public ResponseEntity<CharacterDTO> create(@RequestBody CharacterDTO characterDTO) {
+    public ResponseEntity<CharacterDTO> create(@Valid @RequestBody CharacterDTO characterDTO) {
         characterDTO = characterService.create(characterDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(characterDTO)

@@ -2,6 +2,8 @@ package com.example.demo.Service;
 
 
 import com.example.demo.DTO.CharacterDTO;
+import com.example.demo.DTO.CharacterHistoricDTO;
+import com.example.demo.Entity.Enum.BattleStatus;
 import com.example.demo.Entity.Enum.CharacterClass;
 import com.example.demo.Entity.RpgCharacter;
 import com.example.demo.Exception.ResourceNotFoundException;
@@ -39,11 +41,6 @@ public class CharacterService {
         );
     }
 
-    public RpgCharacter findEntityById(Long id) {
-        return characterRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Character Not Found")
-        );
-    }
 
     public List<CharacterDTO> findAll() {
         List<RpgCharacter> characters = characterRepository.findAll();
@@ -56,6 +53,23 @@ public class CharacterService {
 
         setValues(character, characterDTO);
         return new CharacterDTO(character);
+    }
+
+    @Transactional(readOnly = true)
+    public CharacterHistoricDTO getHistoric(Long id) {
+        if(!characterRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Character Not Found");
+        }
+        RpgCharacter character = characterRepository.getReferenceById(id);
+
+        Integer totalBattles = character.getBattles().size();
+        Long wins = character.getBattles().stream().filter(battle -> battle.getStatus() == BattleStatus.WINNER).count();
+        Long losses = character.getBattles().stream().filter(battle -> battle.getStatus() == BattleStatus.DEFEAT).count();
+        Double winRate = (double) wins / totalBattles * 100;
+
+        return new CharacterHistoricDTO(
+          totalBattles, wins, losses, winRate
+        );
     }
 
 

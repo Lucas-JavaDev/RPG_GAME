@@ -2,6 +2,7 @@ package com.example.demo.Controller;
 
 
 import com.example.demo.DTO.CharacterDTO;
+import com.example.demo.DTO.CharacterHistoricDTO;
 import com.example.demo.Service.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ public class CharacterController {
     @Autowired
     CharacterService characterService;
 
-    @GetMapping(value = "/{characterId}")
-    public ResponseEntity<CharacterDTO> findById(@PathVariable(name = "characterId") Long id) {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CharacterDTO> findById(@PathVariable Long id) {
         CharacterDTO dto = characterService.findById(id);
         return ResponseEntity.ok(dto);
     }
@@ -28,6 +29,12 @@ public class CharacterController {
     public ResponseEntity<List<CharacterDTO>> findAll() {
         List<CharacterDTO> characters = characterService.findAll();
         return ResponseEntity.ok(characters);
+    }
+
+    @GetMapping(value = "/historic/{id}")
+    public ResponseEntity<CharacterHistoricDTO> getHistoric(@PathVariable Long id) {
+        CharacterHistoricDTO historic = characterService.getHistoric(id);
+        return ResponseEntity.ok(historic);
     }
 
     @PostMapping
